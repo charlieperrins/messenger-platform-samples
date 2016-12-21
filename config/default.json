@@ -1,6 +1,6 @@
 {
-    "appSecret": "12345",
-    "pageAccessToken": "12345",
-    "validationToken": "12345",
-    "serverURL": "12345"
+    "appSecret": "8d0c69653d192d12bf7e5a040d814626",
+    "pageAccessToken": "EAAMOEbFtZCbMBAOGdR17NYOSaJEh6pFDCmMNe0d6SZCCJAEP6ZCZBrqiniUNJggmkBKg9xYLYogs4DgYAdSaEtJFRTWuregOVW8BeP3ieab4Lv4bdDzRyk79NQdLnC6bACR51X5RZBy66kI0tKZBjDn1YIif2jDagNa0TotaQ2MQZDZD",
+    "validationToken": "richie_sambucca",
+    "serverURL": "https://crunchy-boy.herokuapp.com"
 }
