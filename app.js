@@ -16,7 +16,8 @@ const
   crypto = require('crypto'),
   express = require('express'),
   https = require('https'),  
-  request = require('request');
+  request = require('request'),
+  fs = require('fs');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -222,6 +223,7 @@ function receivedMessage(event) {
   var message = event.message;
   var attachments = message.attachments;
   var attachment;
+  var videoURL = '';
 
   console.log("Received message for user %d and page %d at %d with message:", 
     senderID, recipientID, timeOfMessage);
@@ -231,7 +233,11 @@ function receivedMessage(event) {
   if(attachments && typeof attachments !== 'undefined' && attachments.length > 0 ) {
     attachment = attachments[0];
     if(attachment.type && typeof attachment.type !== 'undefined' && (attachment.type).toLowerCase() === 'video' ) {
-      console.log('video download url', attachment.payload.url);
+      videoURL = attachment.payload.url;
+
+      downloadVideo(videoURL, 'public/assets/test1.mp4' , function(errMsg) {
+        console.log('Error',errMsg);
+      });
     }
   }
 
@@ -836,6 +842,19 @@ function callSendAPI(messageData) {
     }
   });  
 }
+
+function downloadVideo(url, dest, cb) {
+  var file = fs.createWriteStream(dest);
+  var request = http.get(url, function(response) {
+    response.pipe(file);
+    file.on('finish', function() {
+      file.close(cb);  // close() is async, call cb after close completes.
+    });
+  }).on('error', function(err) { // Handle errors
+    fs.unlink(dest); // Delete the file async. (But we don't check the result)
+    if (cb) cb(err.message);
+  });
+};
 
 // Start server
 // Webhooks must be available via SSL with a certificate signed by a valid 
