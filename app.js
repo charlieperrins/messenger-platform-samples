@@ -238,7 +238,7 @@ function receivedMessage(event) {
       videoName = Math.floor(Date.now() / 1000) + '.mp4';
 
       downloadVideo(videoURL, 'public/assets/' + videoName , function(errMsg) {
-        if(errMsg and typeof errMsg !== 'undefined') {
+        if(errMsg && typeof errMsg !== 'undefined') {
           console.log('Error',errMsg);
         } else {
           console.log('Video saved in https://crunchy-boy.herokuapp.com/assets/'+ videoName );
