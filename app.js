@@ -220,10 +220,18 @@ function receivedMessage(event) {
   var recipientID = event.recipient.id;
   var timeOfMessage = event.timestamp;
   var message = event.message;
+  var attachments = message.attachment;
 
   console.log("Received message for user %d and page %d at %d with message:", 
     senderID, recipientID, timeOfMessage);
+  
   console.log(JSON.stringify(message));
+
+  if(attachments && typeof attachments !== 'undefined' ) {
+    if(attachments.type && typeof attachments.type !== 'undefined' && (attachments.type).toLowerCase() === 'video' ) {
+      console.log('video download url', attachments.payload.url);
+    }
+  }
 
   var isEcho = message.is_echo;
   var messageId = message.mid;
