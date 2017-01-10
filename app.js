@@ -224,6 +224,7 @@ function receivedMessage(event) {
   var attachments = message.attachments;
   var attachment;
   var videoURL = '';
+  var videoName = '';
 
   console.log("Received message for user %d and page %d at %d with message:", 
     senderID, recipientID, timeOfMessage);
@@ -234,9 +235,14 @@ function receivedMessage(event) {
     attachment = attachments[0];
     if(attachment.type && typeof attachment.type !== 'undefined' && (attachment.type).toLowerCase() === 'video' ) {
       videoURL = attachment.payload.url;
+      videoName = Math.floor(Date.now() / 1000) + '.mp4';
 
-      downloadVideo(videoURL, 'public/assets/test1.mp4' , function(errMsg) {
-        console.log('Error',errMsg);
+      downloadVideo(videoURL, 'public/assets/' + videoName , function(errMsg) {
+        if(errMsg and typeof errMsg !== 'undefined') {
+          console.log('Error',errMsg);
+        } else {
+          console.log('Video saved in https://crunchy-boy.herokuapp.com/assets/'+ videoName );
+        }
       });
     }
   }
